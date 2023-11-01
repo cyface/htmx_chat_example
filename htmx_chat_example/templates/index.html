@@ -6,7 +6,7 @@
         {% if user.is_authenticated %}
             <p>You are <strong>{{ user.username }}</strong>&nbsp;
                 <a href="{% url 'logout' %}" style="font-size: smaller">Log Out</a></p>
-            <div hx-get="/chat/" hx-trigger="load"></div>
+            <div hx-get="/chat/" hx-trigger="load" hx-swap="outerHTML"></div>
         {% else %}
             <p><a href='{% url 'login' %}'>Log in</a></p>
         {% endif %}

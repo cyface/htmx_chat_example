@@ -1,5 +1,5 @@
 {% load static %}
-<div hx-get="/chat/" hx-trigger="2s" id="unicorn-chat">
+<div hx-get="/chat/" hx-trigger="every 4s" hx-target="#unicorn-chat" hx-swap="morphdom" id="unicorn-chat">
     <div style="border:solid; max-width: 647px; padding: 15px; max-height: 500px; overflow: auto" id="messageBox">
         {% for message in messages %}
             {% ifchanged %}
@@ -14,29 +14,26 @@
     </div>
     <br>
     <br>
-    {% if request.user %}
-        <div>
-            <input type="text"
-                   name="message"
-                   id="message"
-                   placeholder="Message main channel"
-                   maxlength="100"
-                   minlength="1"
-                   size="94"
-                   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-                   hx-post="/chat/"
-                   hx-target="#unicorn-chat"
-            />
-            <img alt="Send Message Icon" title="Send Message"
-                 src="{% static 'img/paper-airplane.svg' %}" height="15px" width="15px"
-                 style="vertical-align: middle;"
-                 onClick="htmx.process(document.querySelector('#message'))"
-            >
-        </div>
-    {% endif %}
+    <div>
+        <input type="text"
+               name="message"
+               id="message"
+               placeholder="Message main channel"
+               maxlength="100"
+               minlength="1"
+               size="94"
+               hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+               hx-post="/chat/"
+               hx-preserve="true"
+               hx-target="#unicorn-chat"
+        />
+        <img alt="Send Message Icon" title="Send Message"
+             src="{% static 'img/paper-airplane.svg' %}" height="15px" width="15px"
+             style="vertical-align: middle;"
+             onClick="htmx.process(document.querySelector('#message'))"
+        >
+    </div>
+    <script>
+        messageBox.scrollTop = messageBox.scrollHeight - messageBox.clientHeight
+    </script>
 </div>
-<script>
-    document.body.addEventListener('htmx:load', function (evt) {
-        messageBox.scrollTop = messageBox.scrollHeight - messageBox.clientHeight;
-    });
-</script>

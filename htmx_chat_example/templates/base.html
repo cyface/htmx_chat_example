@@ -5,8 +5,10 @@
     <title>HTMX Chat Example</title>
     <script src="{% static 'js/htmx-1.9.6.js' %}"></script>
     <script src="{% static 'js/htmx-debug.js' %}" defer></script>
+    <script src="{% static 'js/morphdom-umd.min.js' %}" defer></script>
+    <script src="{% static 'js/htmx-1.9.6-morphdom-swap.js' %}" defer></script>
 </head>
-<body>
+<body hx-ext="morphdom-swap">
 {% csrf_token %}
 {% block content %}
 {% endblock content %}
